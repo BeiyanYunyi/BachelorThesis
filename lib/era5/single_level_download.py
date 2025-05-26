@@ -50,7 +50,7 @@ request = {
         "23:00",
     ],
     "data_format": "netcdf",
-    "download_format": "unarchived",
+    "download_format": "zip",
     "area": [50, 70, 10, 140],
 }
 
@@ -61,5 +61,5 @@ def download_single_level_data():
     """
     client = cdsapi.Client()
     current_dir = path.dirname(__file__)
-    download_path = path.join(current_dir, "../surface.nc")
+    download_path = path.join(current_dir, "../surface.zip")
     client.retrieve(dataset, request, download_path)

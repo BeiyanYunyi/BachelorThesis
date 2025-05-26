@@ -2,20 +2,36 @@ from os import path
 import numpy as np
 import xarray
 from matplotlib.colors import ListedColormap
+from .era5 import download_single_level_data, download_geopotential_data
+import zipfile
 
 
 current_dir = path.dirname(__file__)
 
-surface_data = xarray.open_dataset(path.join(current_dir, "surface.nc")).sel(
-    # longitude=np.arange(105, 121, 0.25),
-    # latitude=np.arange(20, 31, 0.25),
-)
+try:
+    surface_data = xarray.open_dataset(path.join(current_dir, "surface.nc"))
+except FileNotFoundError:
+    if not path.exists(path.join(current_dir, "surface.zip")):
+        print("Surface data not found, attempt downloading...")
+        download_single_level_data()
+    print("Extracting surface data from zip file...")
+    with zipfile.ZipFile(path.join(current_dir, "surface.zip"), "r") as zip_ref:
+        with (
+            zip_ref.open("data_stream-oper_stepType-instant.nc") as source,
+            open(path.join(current_dir, "surface.nc"), "wb") as target,
+        ):
+            target.write(source.read())
+    surface_data = xarray.open_dataset(path.join(current_dir, "surface.nc"))
+
 surface_data["msl"] /= 100
 
-geopotential_data = xarray.open_dataset(path.join(current_dir, "geopotential.nc")).sel(
-    # longitude=np.arange(105, 121, 0.25),
-    # latitude=np.arange(20, 31, 0.25),
-)
+try:
+    geopotential_data = xarray.open_dataset(path.join(current_dir, "geopotential.nc"))
+except FileNotFoundError:
+    print("Geopotential data not found, attempt downloading...")
+    download_geopotential_data()
+    geopotential_data = xarray.open_dataset(path.join(current_dir, "geopotential.nc"))
+
 geopotential_data["z"] /= 98.1
 
 radar_colors = [

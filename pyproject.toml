@@ -15,6 +15,7 @@ dependencies = [
     "nmc-met-io>=0.1.14.0",
     "notebook>=7.3.2",
     "polars[graph,numpy,pandas]>=1.23.0",
+    "pyqt6>=6.9.0",
     "scipy>=1.15.2",
     "wrf-python",
     "xarray>=2025.1.2",
