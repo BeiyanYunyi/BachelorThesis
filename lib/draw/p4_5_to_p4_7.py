@@ -1,10 +1,10 @@
+from typing import Literal
 from lib import Map, surface_data, geopotential_data
 import numpy as np
 import cartopy.crs as ccrs
-import metpy.calc as mpcalc
 from matplotlib import patheffects
 from scipy.ndimage import gaussian_filter
-from metpy.calc import dewpoint_from_specific_humidity
+from metpy.calc import dewpoint_from_specific_humidity, divergence
 from metpy.units import units
 
 
@@ -72,7 +72,7 @@ def draw_p4_5b():
     pl = map.data.sel(
         valid_time="2024-04-27T05:00:00",
     )
-    viw_div = mpcalc.divergence(pl["viwve"], pl["viwvn"])
+    viw_div = divergence(pl["viwve"], pl["viwvn"])
     viw_div.plot.contourf(
         levels=12,
         cmap="PiYG",
@@ -178,3 +178,48 @@ def draw_p4_7l1():
     title = "2024-04-27 13:00:00 CST 中分析图"
     map.title(title, fontsize=20)
     # map.fig.savefig(f"images/{title}.svg")
+
+
+def draw_p4_7l2(h: Literal["925", "850", "700", "500"]):
+    """
+    图4.7，华南地区中分析图，第二层
+
+    该图的绘制过程最复杂，需要多层图片相叠加，并进行一系列手动绘图
+
+    本函数绘制 925hPa、850hPa、700hPa 与 500hPa 的等压线与风场，随后在 Figma 中相叠加
+    """
+
+    map = Map(
+        geopotential_data.sel(
+            valid_time="2024-04-27T05:00:00",
+            longitude=np.arange(105, 121, 0.25),
+            latitude=np.arange(20, 28, 0.25),
+        ),
+        prj=ccrs.LambertConformal(central_longitude=112, central_latitude=35),
+        location_color="red",
+    ).common()
+    map.ax.set_extent([105, 121, 20, 28])
+    datab = map.data.sel(pressure_level=h)
+    z = datab["z"]
+    z.values = gaussian_filter(z.values, 2)
+    ct = z.plot.contour(
+        levels=np.arange(0, 1000, 4),
+        linewidths=1.5,
+        transform=ccrs.PlateCarree(),
+        colors="black",
+        ax=map.ax,
+    )
+    map.ax.clabel(ct, inline=True, fontsize=10, fmt="%1.0f")
+    datab = map.data.sel(pressure_level=h)
+    map.ax.streamplot(
+        x=datab.longitude.values,
+        y=datab.latitude.values,
+        u=datab.u.values,
+        v=datab.v.values,
+        transform=ccrs.PlateCarree(),
+    )
+
+    map.draw_tornado_location(add_legend=True)
+
+    map.title(h, fontsize=20)
+    # map.fig.savefig(f"images/levels/{h}.svg")

@@ -7,6 +7,7 @@ from lib.draw import (
     draw_p4_5b,
     draw_p4_6,
     draw_p4_7l1,
+    draw_p4_7l2,
 )
 import matplotlib.pyplot as plt
 
@@ -17,5 +18,9 @@ import matplotlib.pyplot as plt
 # draw_p4_5a()
 # draw_p4_5b()
 # draw_p4_6()
-draw_p4_7l1()
+# draw_p4_7l1()
+# draw_p4_7l2("500")
+# draw_p4_7l2("700")
+# draw_p4_7l2("850")
+# draw_p4_7l2("925")
 plt.show()
