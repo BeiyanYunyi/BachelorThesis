@@ -133,11 +133,11 @@ class Map:
         if self.is_surface:
             if h != None:  # Throw error
                 raise ValueError("Surface data does not have height")
-            return self.plot_sf(time, sigma, sigmaT)
+            return self.plot_sf(time, sigma)
         else:
             if h == None:
                 raise ValueError("Geopotential data requires height")
-            return self.plot_gp(time, h, sigma)
+            return self.plot_gp(time, h, sigma, sigmaT)
 
     def plot_sf(self, time: str, sigma=5):
         """
@@ -196,8 +196,7 @@ class Map:
         data["wind_speed"] = np.sqrt(data["u"] ** 2 + data["v"] ** 2)
         data["wind_speed"].plot.contourf(
             extend="max",
-            # levels=np.arange(15, 31, 3),
-            levels=np.arange(6, 24, 3),  # 700hPa
+            levels=np.arange(15, 31, 3) if h == "500" else np.arange(6, 24, 3),
             cbar_kwargs={"location": "bottom", "label": "风速 [m/s]"},
             vmin=15,
             cmap="YlOrBr",

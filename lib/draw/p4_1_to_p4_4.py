@@ -1,0 +1,57 @@
+from ..map import Map
+from ..data import geopotential_data
+import cartopy.crs as ccrs
+
+
+def draw_p4_1():
+    """
+    图4.1，500hPa 大尺度形势图
+    """
+    title = "2024-04-27 13:00:00 CST 500hPa"
+    map = (
+        Map(
+            geopotential_data,
+            prj=ccrs.LambertConformal(central_longitude=112, central_latitude=35),
+            location_color="blue",
+        )
+        .common()
+        .plot("2024-04-27T05:00:00", "500", sigmaT=5, sigma=5)
+        .title(title, fontdict={"fontsize": 20})
+    )
+    # map.fig.savefig(f"images/{title}.svg")
+
+
+def draw_p4_2():
+    """
+    图4.2，700hPa 大尺度形势图
+    """
+    title = "2024-04-27 13:00:00 CST 700hPa"
+    map = (
+        Map(
+            geopotential_data,
+            prj=ccrs.LambertConformal(central_longitude=112, central_latitude=35),
+            location_color="blue",
+        )
+        .common()
+        .plot("2024-04-27T05:00:00", "700", sigmaT=5, sigma=5)
+        .title(title, fontdict={"fontsize": 20})
+    )
+    # map.fig.savefig(f"images/{title}.svg")
+
+
+def draw_p4_3():
+    """
+    图4.3，850hPa 大尺度形势图
+    """
+    title = "2024-04-27 13:00:00 CST 850hPa"
+    map = (
+        Map(
+            geopotential_data,
+            prj=ccrs.LambertConformal(central_longitude=112, central_latitude=35),
+            location_color="blue",
+        )
+        .common()
+        .plot("2024-04-27T05:00:00", "850", sigmaT=5, sigma=5)
+        .title(title, fontdict={"fontsize": 20})
+    )
+    # map.fig.savefig(f"images/{title}.svg")

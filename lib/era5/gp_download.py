@@ -57,6 +57,6 @@ def download_geopotential_data():
     下载各等压面大尺度数据
     """
     current_dir = path.dirname(__file__)
-    download_path = path.join(current_dir, "../geopotential_data.nc")
+    download_path = path.join(current_dir, "../geopotential.nc")
     client = cdsapi.Client()
     client.retrieve(dataset, request, download_path)
