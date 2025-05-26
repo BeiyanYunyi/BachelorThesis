@@ -1,0 +1,25 @@
+[project]
+name = "graduatingpaper"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "caj2pdf-restructured>=0.1.0a7",
+    "cartopy>=0.24.1",
+    "cdsapi>=0.7.5",
+    "dask>=2025.3.0",
+    "ipykernel>=6.29.5",
+    "metpy>=1.6.3",
+    "netcdf4>=1.7.2",
+    "nmc-met-io>=0.1.14.0",
+    "notebook>=7.3.2",
+    "polars[graph,numpy,pandas]>=1.23.0",
+    "scipy>=1.15.2",
+    "wrf-python",
+    "xarray>=2025.1.2",
+    "xwrf>=0.0.4",
+]
+
+[tool.uv.sources]
+wrf-python = { path = "./lib/wrf-python" }

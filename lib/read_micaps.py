@@ -1,0 +1,103 @@
+import ast
+import pandas as pd
+
+columns = {
+    1: "lon",
+    2: "lat",
+    3: "Alt",
+    4: "Grade",
+    5: "Type",
+    21: "Name",
+    201: "Wind_angle",
+    203: "Wind_speed",
+    205: "Wind_angle_1m_avg",
+    207: "Wind_speed_1m_avg",
+    209: "Wind_angle_2m_avg",
+    211: "Wind_speed_2m_avg",
+    213: "Wind_angle_10m_avg",
+    215: "Wind_speed_10m_avg",
+    217: "Wind_angle_max",
+    219: "Wind_speed_max",
+    221: "Wind_angle_instant",
+    223: "Wind_speed_instant",
+    225: "Gust_angle",
+    227: "Gust_speed",
+    229: "Gust_angle_6h",
+    231: "Gust_speed_6h",
+    233: "Gust_angle_12h",
+    235: "Gust_speed_12h",
+    237: "Wind_power",
+    401: "Sea_level_pressure",
+    403: "Pressure_3h_trend",
+    405: "Pressure_24h_trend",
+    407: "Station_pressure",
+    409: "Pressure_max",
+    411: "Pressure_min",
+    413: "Pressure",
+    415: "Pressure_day_avg",
+    417: "SLP_day_avg",
+    419: "Hight",
+    421: "Geopotential_hight",
+    601: "Temp",
+    603: "Temp_max",
+    605: "Temp_min",
+    607: "Temp_24h_trend",
+    609: "Temp_24h_max",
+    611: "Temp_24h_min",
+    613: "Temp_dav_avg",
+    801: "Dewpoint",
+    803: "Dewpoint_depression",
+    805: "Relative_humidity",
+    807: "Relative_humidity_min",
+    809: "Relative_humidity_day_avg",
+    811: "Water_vapor_pressure",
+    813: "Water_vapor_pressure_day_avg",
+    1001: "Rain",
+    1003: "Rain_1h",
+    1005: "Rain_3h",
+    1007: "Rain_6h",
+    1009: "Rain_12h",
+    1011: "Rain_24h",
+    1013: "Rain_day",
+    1015: "Rain_20-08",
+    1017: "Rain_08-20",
+    1019: "Rain_20-20",
+    1021: "Rain_08-08",
+    1023: "Evaporation",
+    1025: "Evaporation_large",
+    1027: "Precipitable_water",
+    1201: "Vis_1min",
+    1203: "Vis_10min",
+    1205: "Vis_min",
+    1207: "Vis_manual",
+    1401: "Total_cloud_cover",
+    1403: "Low_cloud_cover",
+    1405: "Cloud_base_hight",
+    1407: "Low_cloud",
+    1409: "Middle_cloud",
+    1411: "High_cloud",
+    1413: "TCC_day_avg",
+    1415: "LCC_day_avg",
+    1417: "Cloud_cover",
+    1419: "Cloud_type",
+    1601: "Weather_current",
+    1603: "Weather_past_1",
+    1605: "Weather_past_2",
+    2001: "Surface_temp",
+    2003: "Surface_temp_max",
+    2005: "Surface_temp_min",
+}
+
+
+def read_micaps(fname: str, encoding="gb18030") -> pd.DataFrame:
+    txt = (
+        open(fname, "r", encoding=encoding)
+        .read()
+        .strip()
+        .splitlines()[5]
+        .replace("=", ":")
+    )
+    data_dict = ast.literal_eval(txt)
+    df = pd.DataFrame.from_dict(data_dict, orient="index")
+    df.rename(columns=columns, inplace=True)
+    return df

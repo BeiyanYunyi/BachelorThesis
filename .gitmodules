@@ -1,0 +1,6 @@
+[submodule "lib/wrf-python"]
+	path = lib/wrf-python
+	url = https://github.com/BeiyanYunyi/wrf-python
+[submodule "lib/ChinaAdminDivisonSHP"]
+	path = lib/ChinaAdminDivisonSHP
+	url = https://github.com/GaryBikini/ChinaAdminDivisonSHP
