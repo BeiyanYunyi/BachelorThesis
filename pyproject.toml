@@ -9,6 +9,7 @@ dependencies = [
     "cartopy>=0.24.1",
     "cdsapi>=0.7.5",
     "dask>=2025.3.0",
+    "fonttools>=4.56.0",
     "ipykernel>=6.29.5",
     "metpy>=1.6.3",
     "netcdf4>=1.7.2",
