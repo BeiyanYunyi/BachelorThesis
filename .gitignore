@@ -176,3 +176,4 @@ cython_debug/
 *.nc
 *.zip
 UPPER_AIR
+wrfout
