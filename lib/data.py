@@ -2,7 +2,11 @@ from os import path
 import numpy as np
 import xarray
 from matplotlib.colors import ListedColormap
-from .era5 import download_single_level_data, download_geopotential_data
+from .era5 import (
+    download_single_level_data,
+    download_geopotential_data,
+    download_single_station_data,
+)
 import zipfile
 
 
@@ -12,9 +16,9 @@ try:
     surface_data = xarray.open_dataset(path.join(current_dir, "surface.nc"))
 except FileNotFoundError:
     if not path.exists(path.join(current_dir, "surface.zip")):
-        print("Surface data not found, attempt downloading...")
+        print("Single level data not found, attempt downloading...")
         download_single_level_data()
-    print("Extracting surface data from zip file...")
+    print("Extracting single level data from zip file...")
     with zipfile.ZipFile(path.join(current_dir, "surface.zip"), "r") as zip_ref:
         with (
             zip_ref.open("data_stream-oper_stepType-instant.nc") as source,
@@ -33,6 +37,17 @@ except FileNotFoundError:
     geopotential_data = xarray.open_dataset(path.join(current_dir, "geopotential.nc"))
 
 geopotential_data["z"] /= 98.1
+
+try:
+    single_station_data = xarray.open_dataset(
+        path.join(current_dir, "single_station.nc")
+    )
+except FileNotFoundError:
+    print("Single station data not found, attempt downloading...")
+    download_single_station_data()
+    single_station_data = xarray.open_dataset(
+        path.join(current_dir, "single_station.nc")
+    )
 
 radar_colors = [
     "#04e9e7",

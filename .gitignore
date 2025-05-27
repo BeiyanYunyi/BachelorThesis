@@ -175,3 +175,4 @@ cython_debug/
 .DS_Store
 *.nc
 *.zip
+UPPER_AIR
