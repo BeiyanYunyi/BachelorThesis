@@ -32,7 +32,6 @@ def draw(
     :param title: 图表标题
     :param save_path: 保存图表的路径
     """
-    plt.rcParams["font.family"] = ["Heiti TC", "sans-serif"]
 
     # STEP 1: CREATE THE SKEW-T OBJECT AND MODIFY IT TO CREATE A
     # NICE, CLEAN PLOT

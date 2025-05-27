@@ -10,8 +10,6 @@ from scipy.ndimage import gaussian_filter
 import numpy as np
 from xarray import Dataset
 
-matplotlib.rcParams["font.family"] = ["Heiti TC"]
-
 current_dir = path.dirname(__file__)
 
 

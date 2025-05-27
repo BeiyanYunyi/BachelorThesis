@@ -14,6 +14,8 @@ from lib.draw import (
 )
 import matplotlib.pyplot as plt
 
+plt.rcParams["font.family"] = ["Heiti TC", "sans-serif"]
+
 # draw_p4_1()
 # draw_p4_2()
 # draw_p4_3()
