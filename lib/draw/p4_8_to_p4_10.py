@@ -22,6 +22,15 @@ def draw(
 ):
     """
     从预处理好的数据中绘制 T-lnP 图和风矢图，附带一系列诊断量
+
+    :param T: 温度数据，单位为摄氏度
+    :param p: 气压数据，单位为百帕
+    :param Td: 露点温度数据，单位为摄氏度
+    :param u: U 分量风速数据，单位为米每秒
+    :param v: V 分量风速数据，单位为米每秒
+    :param z: 高度数据，单位为米
+    :param title: 图表标题
+    :param save_path: 保存图表的路径
     """
     plt.rcParams["font.family"] = ["Heiti TC", "sans-serif"]
 
@@ -563,7 +572,9 @@ def nmc_preprocess() -> (
 def era5_preprocess() -> (
     tuple[Quantity, Quantity, Quantity, Quantity, Quantity, Quantity]
 ):
-
+    """
+    ERA5 再分析资料读取与预处理
+    """
     from ..data import single_station_data
 
     df = single_station_data.sel(
@@ -587,6 +598,9 @@ def era5_preprocess() -> (
 def wrf_preprocess() -> (
     tuple[Quantity, Quantity, Quantity, Quantity, Quantity, Quantity]
 ):
+    """
+    WRF 模式输出数据读取与预处理
+    """
     data_path = path.join(current_dir, "../wrfout/d03/wrfout_d01_2024-04-27_07_00_00")
     if not path.exists(data_path):
         raise Exception(
