@@ -47,6 +47,7 @@ def draw_p4_5a():
         color="black",
         width=0.002,
         headlength=4,
+        add_guide=False,
     )
     qk = map.ax.quiverkey(
         quiver,
@@ -86,7 +87,7 @@ def draw_p4_5b():
         },
     )
     map.gridlines()
-    title = "2024-04-27 13:00:00 CST 整层水汽通量"
+    title = "2024-04-27 13:00:00 CST 整层水汽通量散度"
     map.title(title, fontsize=20)
     # map.fig.savefig(f"images/{title}.svg")
 
